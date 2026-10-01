@@ -4,6 +4,9 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import { useEffect } from "react";
+
+import { useRouter } from "next/navigation";
+import { logout } from "@/utils/sessions";
  
 export default function Nav() {
   const pathname = usePathname();
@@ -12,6 +15,13 @@ export default function Nav() {
   useEffect(() => {
     console.log(searchParams.get("v"));
   }, [searchParams]);
+
+  const router = useRouter();
+ 
+  const Logout = () => {
+    logout(); // Destroy the cookie
+    return router.push("/login"); // redirect to login page
+  };
  
   return (
     <nav>
@@ -31,6 +41,8 @@ export default function Nav() {
       >
         Mon profil
       </Link>
+
+      <button onClick={Logout}>Logout</button>
     </nav>
   );
 }
